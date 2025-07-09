@@ -59,7 +59,7 @@
 //     console.log("Prachi got 50lpa package")
 // })
 // .catch((err)=>{
-//     console.log("Prachi got rejected");
+//     console.log("Prachi got rejected"); 
 //     // works specifically for above then
 // })
 // .then((res)=>{
@@ -69,6 +69,7 @@
 //     console.log("Prachi got rejected again");
 // })
 //the last catch works for every error
+
 
 //Promise APIs-->
 // const promise1=new Promise((resolve, reject)=>{
@@ -136,37 +137,76 @@
 // checkAssignment();
 
 //fetch api--> fetch data from https://dummyjson.com/products
-async function fetchData() {
-	try {
-		const a = await fetch('https://dummyjson.com/products');
-		const data = await a.json();
-		console.log(data);
-	} catch (err) {
-		console.log('Error: ' + err.message);
-	}
+/*
+async function fetchData(){
+    try{
+        const a =await fetch("https://dummyjson.com/products")
+        const data=await a.json();
+        console.log(data);
+    }
+    catch(err){
+        console.log("Error: "+err.message);
+    }
 }
 fetchData();
 
 //HW- data jo arha hai website se us mein se title, description, prize nikal ke store krvao and return krvao
 
 async function fetchData() {
-	try {
-		const b = await fetch('https://dummyjson.com/products');
-		const data = await b.json();
+  try {
+    const b = await fetch("https://dummyjson.com/products");
+    const data = await b.json();
 
-		const simplifiedProducts = data.products.map(product => {
-			return {
-				title: product.title,
-				description: product.description,
-				price: product.price
-			};
-		});
+    const simplifiedProducts = data.products.map(product => {
+      return {
+        title: product.title,
+        description: product.description,
+        price: product.price
+      };
+    });
 
-		console.log(simplifiedProducts);
-		return simplifiedProducts;
-	} catch (err) {
-		console.log('Error: ' + err.message);
-	}
+    console.log(simplifiedProducts);
+    return simplifiedProducts;
+
+  } catch (err) {
+    console.log("Error: " + err.message);
+  }
+}
+
+fetchData();
+*/
+
+async function fetchData() {
+  try {
+    const b = await fetch("https://dummyjson.com/products");
+    const data = await b.json();
+
+    const simplifiedProducts = data.products.map(product => {
+      return {
+        title: product.title,
+        description: product.description,
+        price: product.price
+      };
+    });
+
+    // Display in frontend
+    const container = document.getElementById("productContainer");
+    simplifiedProducts.forEach(product => {
+      const div = document.createElement("div");
+      div.className = "product";
+      div.innerHTML = `
+        <div class="product-title">${product.title}</div>
+        <div class="product-description">${product.description}</div>
+        <div class="product-price">Price: ₹${product.price}</div>
+      `;
+      container.appendChild(div);
+    });
+
+    return simplifiedProducts;
+
+  } catch (err) {
+    console.log("Error: " + err.message);
+  }
 }
 
 fetchData();
